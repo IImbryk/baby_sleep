@@ -1,5 +1,5 @@
 import pickle
-
+# from flask
 model_path = 'models/baseline_pipline.pkl'
 
 
