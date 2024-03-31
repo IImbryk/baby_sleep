@@ -1,4 +1,4 @@
-import pickle
+import joblib
 from flask import Flask
 from flask import request, jsonify
 
@@ -7,9 +7,10 @@ model_path = 'models/baseline_pipline.pkl'
 
 
 @app.route('/predict', methods=['POST'])
-def predict_single(pipeline):
+def predict_single():
     input_vector = request.get_json()
-    y = pipeline.predict(input_vector)
+    # y = model.predict(input_vector)
+    y = model.predict([list(input_vector.values())])
     result = {
         'class_output': int(y)
     }
@@ -23,9 +24,13 @@ def test_get():
 
 
 if __name__ == '__main__':
-    with open(model_path, 'rb') as f_in:
-        model = pickle.load(f_in)
+
+    # read model
+    model = joblib.load(model_path)
 
     app.run(debug=True, host='0.0.0.0', port=9696)
+
+
+
 
 
